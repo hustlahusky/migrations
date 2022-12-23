@@ -1,0 +1,38 @@
+{
+  "name": "hustlahusky/migrations",
+  "description": "Framework-agnostic, small migrations library",
+  "type": "library",
+  "keywords": [],
+  "homepage": "https://github.com/hustlahusky/migrations",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Constantine Karnaukhov",
+      "email": "genteelknight@gmail.com",
+      "homepage": "https://github.com/hustlahusky",
+      "role": "Maintainer"
+    }
+  ],
+  "require": {
+    "php": "^7.4|^8.0"
+  },
+  "require-dev": {
+    "ext-pdo": "*",
+    "phpstan/phpstan": "^1.0",
+    "phpunit/phpunit": "^9.5",
+    "roave/security-advisories": "dev-latest"
+  },
+  "autoload": {
+    "psr-4": {
+      "Hustlahusky\\Migrations\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Hustlahusky\\Migrations\\": "tests"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
