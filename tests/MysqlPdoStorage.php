@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Hustlahusky\Migrations;
 
-final class PdoStorage implements StorageInterface
+final class MysqlPdoStorage implements StorageInterface, LockInterface
 {
     private \PDO $pdo;
     private string $table;
@@ -102,5 +102,33 @@ final class PdoStorage implements StorageInterface
             )
             SQL
         );
+    }
+
+    public function acquireLock(): bool
+    {
+        $lockName = $this->table;
+
+        $stmt = $this->pdo->query(
+            <<<SQL
+            SELECT GET_LOCK('{$lockName}', 0) AS L
+            SQL
+        );
+        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        return 1 === \filter_var($row['L'] ?? 0, \FILTER_VALIDATE_INT);
+    }
+
+    public function releaseLock(): bool
+    {
+        $lockName = $this->table;
+
+        $stmt = $this->pdo->query(
+            <<<SQL
+            SELECT RELEASE_LOCK('{$lockName}') AS L
+            SQL
+        );
+        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        return 1 === \filter_var($row['L'] ?? 0, \FILTER_VALIDATE_INT);
     }
 }

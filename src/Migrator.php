@@ -29,6 +29,7 @@ final class Migrator implements \IteratorAggregate
         $installed = 0;
 
         $generator = function () {
+            $this->list = null;
             foreach ($this->getIterator() as $item) {
                 if (Status::NEW === $item->getStatus()) {
                     yield $item;
@@ -60,6 +61,7 @@ final class Migrator implements \IteratorAggregate
         $reverted = 0;
 
         $generator = function () {
+            $this->list = null;
             $list = $this->listMigrations();
 
             for ($i = \count($list) - 1; $i >= 0; $i--) {
